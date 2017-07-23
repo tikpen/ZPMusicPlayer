@@ -108,9 +108,11 @@
     self.singerLabel.text = playingMusic.singer;
     
     //3.播放音乐
-    //AVAudioPlayer *currentPlayer = [ZPAudioTool playMusic:playingMusic.filename];
+//    AVAudioPlayer *currentPlayer = [ZPAudioTool playMusic:playingMusic.filename];
     //currentPlayer.delegate = self;
 //    [[ZPPlayer shareSingleton] initWithContentsOfURL:[NSURL URLWithString:playingMusic.filename] error:nil];
+//    [[ZPPlayer shareSingleton] initWithContentsOfURL:[NSURL fileURLWithPath:playingMusic.filename] error:nil];
+    [ZPAudioTool playMusic:playingMusic.filename];
     [ZPPlayer shareSingleton].delegate = self;
     self.currentTimeLabel.text = [self stringWithTime:[ZPPlayer shareSingleton].currentTime];
     self.allTimeLabel.text = [self stringWithTime:[ZPPlayer shareSingleton].duration];
@@ -129,6 +131,8 @@
     
     //5.添加动画
     //[self addIconViewAnimate];
+    
+//    [[ZPPlayer shareSingleton] prepareToPlay];
     
 }
 
@@ -159,7 +163,6 @@
     [self updateProgressInfo];
     self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateProgressInfo) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.progressTimer forMode:NSRunLoopCommonModes];
-
 }
 
 -(void)removeProgressTimer{
@@ -228,7 +231,11 @@
 
 #pragma mark - 播放操作 -
 
-
+- (IBAction)back:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
 
 - (IBAction)startOrPause:(UIButton *)sender {
     
